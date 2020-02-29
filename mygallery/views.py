@@ -1,5 +1,5 @@
-from django.http import HttpResponse
+from django.http  import HttpResponse
 
-#create your views here
+# Create your views here.
 def welcome(request):
     return HttpResponse('Welcome to my gallery')
