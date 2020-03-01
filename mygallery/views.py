@@ -1,14 +1,13 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, Http404
 import datetime as dt
+from .models import Article
 
 # Create your views here.
-def welcome(request):
-    return render(request, 'welcome.html')
-
-def mygallery_of_day(request):
+def news_today(request):
     date = dt.date.today()
-    return render(request, 'my-gallery/today-gallery.html',{'date': date})
+    news = Article.todays_news()
+    return render(request, 'my-gallery/today-news.html',{'date': date,"news":news})
 
 
 
@@ -23,6 +22,27 @@ def past_days_mygallery(request,past_date):
         assert False
 
     if date == dt.date.today():
-        return redirect(news_of_day)
+        return redirect(news_today)
+    
+    news = Article.days_news(date)
+    return render(request, 'my-gllery/past-gallery.html', {"date":date,"mygallery":mygallery})
 
-    return render(request, 'my-gallery/past-gallery.html', {"date":date})
+def search_results(request):
+
+    if 'article' in request.GET and request.GET["article"]:
+        search_term = request.GET.get("article")
+        searched_articles = Article.search_by_title(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'my-gallery/search.html',{"message":message,"articles": searched_articles})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'my-gallery/search.html',{"message":message}) 
+
+def article(request,article_id):
+    try:
+        article = Article.objects.get(id = article_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request,"my-gallery/article.html", {"article":article})       

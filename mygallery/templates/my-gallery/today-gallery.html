@@ -1,5 +1,35 @@
-{%extends 'my-gallery/base.html'%}
+{%extends 'my-galery/base.html'%}
+{{ block.super}}
 
+<div class="container">
 {% block content %}
-{{block.super}}
+  <!-- Looping through news   -->
+  {% for mygallery_item in mygalley %}
+
+  <div class="row">
+    <!-- displaying News articles -->
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <h2 class="text-center"> {{ mygallery_item.title }} </h2>
+    </div>
+
+    <!--Display news Article images  -->
+    <div class="row">
+      <!-- displaying News articles -->
+      <a href="{% url 'article' mygallery_item.id %} ">
+          <h2 class="text-center"> {{ mygallery_item.title }} </h2>
+      </a>
+      <p class="text-center">{{mygallery_item.post|truncatechars:200}} </p>
+  </div>
+
+  </div>
+
+  {% empty %}
+  <div class="row">
+    <h2 class="text-center">There is no pictures posted yet.</h2>
+  </div>
+  {% endfor %}
+
+
+
 {% endblock %}
+</div>
