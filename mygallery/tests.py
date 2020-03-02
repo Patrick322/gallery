@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.test import TestCase
-from .models import Editor,Article,tags
+from .models import Image,Category,Location
 import datetime as dt
 
 # Create your tests here.
@@ -11,7 +11,7 @@ class ImageTestClass(TestCase):
         self.james= Editor(first_name = 'James', last_name ='Muriuki', email ='james@moringaschool.com')
     # Testing  instance
     def test_instance(self):
-        self.assertTrue(isinstance(self.james,Editor))
+        self.assertTrue(isinstance(self.james,Location))
     # Testing Save Method
     def test_save_method(self):
         self.james.save_editor()
@@ -19,7 +19,7 @@ class ImageTestClass(TestCase):
         self.assertTrue(len(editors) > 0)
 
 
-class ArticleTestClass(TestCase):
+class CategoryTestClass(TestCase):
 
     def setUp(self):
         # Creating a new editor and saving it
@@ -27,18 +27,18 @@ class ArticleTestClass(TestCase):
         self.james.save_editor()
 
         # Creating a new tag and saving it
-        self.new_tag = tags(name = 'testing')
-        self.new_tag.save()
+        self.new_location = Location(name = 'testing')
+        self.new_location.save()
 
-        self.new_article= Article(title = 'Test Article',post = 'This is a random test Post',editor = self.james)
-        self.new_article.save()
+        self.new_image= Image(title = 'Test Category',post = 'This is a random test Post',image = self.james)
+        self.new_image.save()
 
-        self.new_article.tags.add(self.new_tag)
+        self.new_image.tags.add(self.new_tag)
 
     def tearDown(self):
-        Editor.objects.all().delete()
-        tags.objects.all().delete()
-        Article.objects.all().delete()
+        Location.objects.all().delete()
+        Category.objects.all().delete()
+        Image.objects.all().delete()
 
    def test_get_mygallery_today(self):
         today_mygallery = Article.todays_news()
