@@ -14,6 +14,14 @@ Buong Patrick
 * Django
 * html 5
 
+## Codebeat
+
+[![codebeat badge](https://codebeat.co/badges/2d8fed26-c8a6-4e8a-a02e-31e537a112cc)](https://codebeat.co/projects/github-com-patrick322-gallery-master)
+
+
+## Livelink
+https://patogallery.herokuapp.com/
+
 ## Setup Requirements
 * Have python3.6 installed in your machine
 * Run the following command inorder to clone the repository:
