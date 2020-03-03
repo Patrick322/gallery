@@ -15,9 +15,10 @@
 
   {% if articles %}
     {% for article in articles %}
-      <div class="col-sm-6 col-md-3">
-          <h1>{{image.title}}</h1>
-      </div>
+    <div class=" col-sm-12 col-md-6 col-lg-3" style="padding-bottom:40px;">
+      <img src="{{images_item.image.url}}" class="img-responsive " alt="Image" width="400" height="200" data-toggle="modal" data-target="#{{images_item.title }}{{image.id}}">
+      
+    </div>
     {% endfor %}
   {% endif %}
   </div>
