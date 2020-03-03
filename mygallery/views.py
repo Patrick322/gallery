@@ -25,13 +25,13 @@ def past_days_mygallery(request,past_date):
         return redirect(news_today)
     
     news = Article.days_news(date)
-    return render(request, 'my-gllery/past-gallery.html', {"date":date,"mygallery":mygallery})
+    return render(request, 'my-gallery/past-gallery.html', {"date":date,"mygallery":mygallery})
 
 def search_results(request):
 
     if 'image' in request.GET and request.GET["image"]:
         search_term = request.GET.get("image")
-        searched_Image = IMage.search_by_title(search_term)
+        searched_Image = Image.search_by_title(search_term)
         message = f"{search_term}"
 
         return render(request, 'my-gallery/search.html',{"message":message,"articles": searched_articles})
@@ -48,7 +48,11 @@ def image(request,article_id):
     return render(request,"my-gallery/image.html", {"image":image})
 
 def welcome(request):
-    return render(request,"welcome.html")   
+    images = Image.objects.all()
+    
+    return render(request,'welcome.html',{"images":images})
+
 
 def mygallery_of_day(request):
+
     return render(request,"today-gallery.html")   

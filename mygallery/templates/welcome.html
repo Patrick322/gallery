@@ -1,41 +1,65 @@
 {%extends 'my-gallery/base.html'%}
-{% load static %}
+
 {% block content %}
+{% load static %}
+{{block.super}}
 <h1 class="text-center">Welcome to my gallery</h1>
-<div class="container">
-      <!-- Looping through news   -->
-      {% for images in images %}
-    
-      <div class="row">
-        <!-- displaying News articles -->
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-          <h2 class="text-center"> {{ images_item.title }} </h2>
-        </div>
+<div class="container-fluid">
+  <!-- Looping through news   -->
 
-    
-        <!--Display news Article images  -->
-        <div class="row">
-          <!-- displaying News articles -->
-          <a href="{% url 'article' mygallery_item.id %} ">
-              <h2 class="text-center"> {{ images_item.title }} </h2>
-          </a>
-          <p class="text-center">{{images_item.post|truncatechars:200}} </p>
-      </div>
-    
-      </div>
-    
-      {% empty %}
-      <div class="row">
-        <h2 class="text-center">There is no pictures posted yet.</h2>
-      </div>
-
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <img src="{{image.image.url" class="img-responsive" alt="Image">
-          </div>
-      {% endfor %}
-    
-    
-    
-    {% endblock %}
+  <div class="row">
+    {% for images_item in images %}
+    <!-- displaying News articles -->
+    <div class=" col-sm-12 col-md-6 col-lg-3" style="padding-bottom:40px;">
+      <img src="{{images_item.image.url}}" class="img-responsive " alt="Image" width="400" height="200" data-toggle="modal" data-target="#{{images_item.title }}{{image.id}}">
+      
+      <!-- <P>{{images_item.image.url}}</P>
+      <P>{{images_item.location}}</P> -->
+      <!-- <p class="text-center">{{images_item.post |truncatechars:200}} </p> -->
     </div>
-    
+
+    <div class="modal fade" id="{{images_item.title }}{{image.id}}" tabindex="-1" role="dialog"
+    aria-labelledby="examplemodal" aria-hidden="true" width="200px">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-center" id="modaltitle">{{ images_item.title }}</h4>
+           <p>{{images_item.post |truncatechars:200}}</p>
+        </div>
+        <div class="modal-body text-center">
+         <img src="{{images_item.image.url}}" alt="" width="100%" height="100%">
+        </div>
+        <div class="modal-footer">
+            <div class="form-group row">
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 padding-1">
+                    <input id="{{image.id}}-url" class="form-control input-md responsive" type="text"
+                        value="{{images_item.image.url}}">
+                </div>
+                <span class="col-xs-2 col-sm-2 col-md-2 col-lg-2 padding-2">
+                    <button class="btn btn-sm btn-info"
+                        onclick="copyToClipboard('#{{image.id}}-url')">Copy</button>
+                </span>
+            </div>  
+           
+            <span>Location:{{images_item.location}}</span>
+            <span>Category:{{images_item.category}}</span>
+          <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    {% empty %}
+    <div class="row">
+      <h2 class="text-center">There is no pictures posted yet.</h2>
+    </div>
+
+    {% endfor %}
+  </div>
+
+
+
+</div>
+{% endblock %}

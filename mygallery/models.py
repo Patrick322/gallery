@@ -16,17 +16,18 @@ class Location(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length =30)
+    category = models.CharField(max_length =30)
 
     def __str__(self):
-        return self.name
+        return self.category
 
 class Image(models.Model):
     title = models.CharField(max_length =60, default='null')
     post = models.TextField(null=True)
-    location = models.ManyToManyField(Location)
+    location = models.ForeignKey(Location,on_delete=models.CASCADE,blank=True,null=True)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,blank=True,null=True)
     pub_date = models.DateTimeField(default=None)
-    image = models.ImageField(upload_to = 'image/')
+    image = models.ImageField(upload_to='ret/')
 
     def __str__(self):
         return self.title
@@ -34,7 +35,13 @@ class Image(models.Model):
     @classmethod
     def search_by_title(cls,search_term):
         news = cls.objects.filter(title__icontains=search_term)
-        return mygallery  
+        return mygallery 
+
+    @classmethod
+    def get_image_by_id(cls,id):
+        image = cls.objects.get(id = id)
+
+        return image 
 
     @classmethod
     def todays_mygallery(cls):

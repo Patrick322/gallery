@@ -5,26 +5,32 @@
 <div class="container">
  <h1 class="text-center">Welcome to my gallery</h1>
 {% block content %}
-  <!-- Looping through news   -->
+  <!-- Looping through images   -->
   
   {% for mygallery_item in mygallery %}<!-- <h1 class="text-center">Welcome to my gallery</h1> -->
 
+
   <div class="row">
-    <!-- displaying News articles -->
+    <!-- displaying mygallery image -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <h2 class="text-center"> {{ mygallery_item.title }} </h2>
+
     </div>
 
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <img src="{{mygallery_item.image.url}}" class="img-responsive" alt="Image">
+  </div>
 
-    <!--Display news Article images  -->
-    <div class="row">
-      <!-- displaying News articles -->
-      <a href="{% url 'article' mygallery_item.id %} ">
+
+    <!--Display mygallery images  -->
+    <div class="row">  
+      <!-- displaying mygallery image -->
+      <a href="">
           <h2 class="text-center"> {{ mygallery_item.title }} </h2>
       </a>
       <p class="text-center">{{mygallery_item.post|truncatechars:200}} </p>
   </div>
-
+ 
   </div>
 
   {% empty %}
